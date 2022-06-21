@@ -1,3 +1,4 @@
+require 'pry'
 class Person
   attr_accessor :partner, :name
 
@@ -6,16 +7,36 @@ class Person
   end
 
   def get_married(person)
+
+    if person.is_a?(Person)
     self.partner = person
     person.partner = self
+    else 
+      begin
+      raise PartnerError
+      rescue PartnerError => error
+        puts error.message
+      end
+    end
+  end
+
+  class PartnerError < StandardError
+    def message
+      'gotta be a Person'
+    end
   end
 
 end
+
 
 beyonce = Person.new("Beyonce")
 beyonce.get_married("Jay-Z")
 puts beyonce.name
 
+# class Fish < Person
+# end
 
 
 
+
+binding.pry
